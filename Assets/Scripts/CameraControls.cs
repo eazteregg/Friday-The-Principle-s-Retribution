@@ -39,6 +39,8 @@ public class CameraControls : MonoBehaviour
             
             else
             {
+                transform.LookAt(player.transform);
+                offset = transform.position - player.transform.position;
                 detached = false;
                 Debug.Log("attached");
             }

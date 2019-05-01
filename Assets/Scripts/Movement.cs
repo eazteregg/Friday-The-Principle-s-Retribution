@@ -44,7 +44,11 @@ public class Movement : MonoBehaviour
     void Update()
     {
 
-        moveDirection = new Vector3(0, moveDirection.y, 0);
+        if (characterController.isGrounded && camera.GetComponent<CameraControls>().isDetached())
+        {
+            moveDirection = new Vector3(0, moveDirection.y, 0);
+        }
+        
 
         forward = new Vector3(camera.transform.forward.x, 0, camera.transform.forward.z);
         right = new Vector3 (camera.transform.right.x, 0, camera.transform.right.z);
