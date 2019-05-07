@@ -9,6 +9,8 @@ public class TeacherPatrol : MonoBehaviour
     public Transform[] points;
     private int destPoint = 0;
     private NavMeshAgent agent;
+    private GameObject player;
+    private bool wasChasing;
 
 
     void Start()
@@ -19,7 +21,8 @@ public class TeacherPatrol : MonoBehaviour
         // between points (ie, the agent doesn't slow down as it
         // approaches a destination point).
         agent.autoBraking = false;
-
+        player = GameObject.FindGameObjectWithTag("Player");
+        wasChasing = false;
         GotoNextPoint();
     }
 
@@ -43,9 +46,55 @@ public class TeacherPatrol : MonoBehaviour
     {
         // Choose the next destination point when the agent gets
         // close to the current one.
-        if (!agent.pathPending && agent.remainingDistance < 0.5f)
-            GotoNextPoint();
-        Debug.Log("Teacher position:" + transform.position.ToString());
-        Debug.Log("Teacher forward Patrol:" + transform.forward.ToString());
+
+        Vision vision = gameObject.GetComponentInChildren(typeof(Vision)) as Vision;
+
+        
+
+            if (vision.isChasing())
+            {
+            if (vision != null)
+            {
+                ChaseUpdate();
+            }
+                
+        }
+        
+    
+
+        else
+        {
+            PatrolUpdate();
+        }
+
+        void ChaseUpdate()
+        {
+            if (!wasChasing)
+            {
+                wasChasing = true;
+                agent.acceleration = 10f;
+                agent.speed = 5.5f;
+
+            }
+
+            agent.destination = player.transform.position;
+
+        }
+
+        void PatrolUpdate()
+        {
+            if (wasChasing)
+            {
+                wasChasing = false;
+                agent.acceleration = 8f;
+                agent.speed = 3.5f;
+                agent.destination = points[destPoint].position;
+            }
+            if (!agent.pathPending && agent.remainingDistance < 0.5f)
+                GotoNextPoint();
+            Debug.Log("Teacher position:" + transform.position.ToString());
+            Debug.Log("Teacher forward Patrol:" + transform.forward.ToString());
+        }
+       
     }
 }
