@@ -73,7 +73,7 @@ public class TeacherPatrol : MonoBehaviour
             {
                 wasChasing = true;
                 agent.acceleration = 10f;
-                agent.speed = 5.5f;
+                agent.speed = 3.5f;
 
             }
 

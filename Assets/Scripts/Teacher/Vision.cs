@@ -18,6 +18,9 @@ public class Vision : MonoBehaviour
     private Renderer renderer;
     private float aggressionTimer;
 
+    private bool inside = false;
+    private bool outside = true;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -39,6 +42,17 @@ public class Vision : MonoBehaviour
         transform.localRotation = Quaternion.identity;
 
         Debug.Log("Vision Cone position: " + transform.position.ToString());
+
+        if (inside)
+        {
+            Debug.Log("Inside");
+
+            if (Input.GetKeyDown(KeyCode.E))
+            {
+                chasing = false;
+                gameObject.GetComponent<Renderer>().material.color = Color.yellow;
+            }
+        }
 
         // check if the teacher is chasing someone
         if (chasing) {
@@ -134,5 +148,17 @@ public class Vision : MonoBehaviour
     public bool isChasing()
     {
         return chasing;
+    }
+
+    public void Inside()
+    {
+        inside = true;
+        outside = false;
+    }
+
+    public void Outside()
+    {
+        outside = true;
+        inside = false;
     }
 }

@@ -12,7 +12,7 @@ public class PlayerMovement : MonoBehaviour
     public float jumpCooldownMAX = .3f;
     public float maxWalljumpFallSpeed = -5.0f;
     private float jumpCooldown = 0.0f;
-
+    
 
     private CharacterController characterController;
     private Collider collider;
@@ -44,17 +44,18 @@ public class PlayerMovement : MonoBehaviour
     void Update()
     {
 
+
         if (characterController.isGrounded && camera.GetComponent<CameraControls>().isDetached())
         {
             moveDirection = new Vector3(0, moveDirection.y, 0);
         }
-        
+
 
         forward = new Vector3(camera.transform.forward.x, 0, camera.transform.forward.z);
-        right = new Vector3 (camera.transform.right.x, 0, camera.transform.right.z);
+        right = new Vector3(camera.transform.right.x, 0, camera.transform.right.z);
 
 
-        if (characterController.isGrounded && !camera.GetComponent<CameraControls>().isDetached()) 
+        if (characterController.isGrounded && !camera.GetComponent<CameraControls>().isDetached())
         {
             float directHoriz = Input.GetAxis("Horizontal");
             float directVert = Input.GetAxis("Vertical");
@@ -79,4 +80,6 @@ public class PlayerMovement : MonoBehaviour
 
         characterController.Move(moveDirection * Time.deltaTime);
     }
+
+
 }
